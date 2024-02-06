@@ -1,1 +1,1 @@
-# zephyr_zest-wifi
+# zephyr_zest-radio-wifi
