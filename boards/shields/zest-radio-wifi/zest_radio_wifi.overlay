@@ -4,14 +4,20 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- #include <freq.h>
- #include <zephyr/dt-bindings/gpio/sixtron-header.h>
+#include <freq.h>
+#include <zephyr/dt-bindings/gpio/sixtron-header.h>
+
+/ {
+	chosen {
+		zephyr,wifi = &wlan0;
+	};
+};
 
 &sixtron_spi {
 	status = "okay";
 
-	nrf700x: nrf7002@0 {
-		compatible = "nordic,nrf700x-spi";
+	nrf7002: nrf7002-spi@0 {
+		compatible = "nordic,nrf7002-spi";
 		status = "okay";
 		reg = <0>;
 		spi-max-frequency = <DT_FREQ_M(8)>;
@@ -19,5 +25,22 @@
 		iovdd-ctrl-gpios = <&sixtron_connector_1 DIO4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;    /* D0 */
 		bucken-gpios = <&sixtron_connector_1 DIO2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;        /* D1 */
 		host-irq-gpios = <&sixtron_connector_1 DIO3 GPIO_ACTIVE_HIGH>;     /* D7 */
+
+		/* Maximum TX power limits for 2.4 GHz */
+		wifi-max-tx-pwr-2g-dsss = <21>;
+		wifi-max-tx-pwr-2g-mcs0 = <16>;
+		wifi-max-tx-pwr-2g-mcs7 = <16>;
+
+		wifi-max-tx-pwr-5g-low-mcs0 = <13>;
+		wifi-max-tx-pwr-5g-low-mcs7 = <13>;
+		wifi-max-tx-pwr-5g-mid-mcs0 = <13>;
+		wifi-max-tx-pwr-5g-mid-mcs7 = <13>;
+		wifi-max-tx-pwr-5g-high-mcs0 = <12>;
+		wifi-max-tx-pwr-5g-high-mcs7 = <12>;
+
+		/* List of interfaces */
+		wlan0: wlan0 {
+			compatible = "nordic,wlan";
+		};
 	};
 };
