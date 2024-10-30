@@ -16,15 +16,15 @@
 &sixtron_spi {
 	status = "okay";
 
-	nrf7002: nrf7002-spi@0 {
+	nrf70: nrf7002-spi@0 {
 		compatible = "nordic,nrf7002-spi";
 		status = "okay";
 		reg = <0>;
 		spi-max-frequency = <DT_FREQ_M(8)>;
 
-		iovdd-ctrl-gpios = <&sixtron_connector_1 DIO4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;    /* DIO4 */
-		bucken-gpios = <&sixtron_connector_1 DIO2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;        /* DIO2 */
-		host-irq-gpios = <&sixtron_connector_1 DIO3 GPIO_ACTIVE_HIGH>;     /* DIO3 */
+		iovdd-ctrl-gpios = <&sixtron_connector_1 DIO4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+		bucken-gpios = <&sixtron_connector_1 DIO2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+		host-irq-gpios = <&sixtron_connector_1 DIO3 GPIO_ACTIVE_HIGH>;
 
 		/* Maximum TX power limits for 2.4 GHz */
 		wifi-max-tx-pwr-2g-dsss = <21>;
