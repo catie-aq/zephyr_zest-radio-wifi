@@ -8,4 +8,6 @@ This board enables the following component:
 
 - [Nordic Semiconductor nRF7002](https://www.nordicsemi.com/Products/nRF7002) Wi-Fi companion IC
 
-Shield name: `zest_radio_wifi`
+> [!NOTE]
+> The node label for the nRF7002 component is `nrf70`. It is **chosen** by `zephyr,wifi`. \
+> Shield name: `zest_radio_wifi`.
