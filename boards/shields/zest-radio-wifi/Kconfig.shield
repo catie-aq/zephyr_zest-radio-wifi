@@ -3,3 +3,8 @@
 
 config SHIELD_ZEST_RADIO_WIFI
 	def_bool $(shields_list_contains,zest_radio_wifi)
+	select SPI
+
+config SHIELD_ZEST_RADIO_WIFI_ALT
+	def_bool $(shields_list_contains,zest_radio_wifi_alt)
+	select SPI
