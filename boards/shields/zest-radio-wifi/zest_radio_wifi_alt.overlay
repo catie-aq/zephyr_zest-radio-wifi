@@ -7,10 +7,13 @@
 #include <freq.h>
 #include <zephyr/dt-bindings/gpio/sixtron-header.h>
 
-#define PERIPHERAL_ZEST_RADIO_WIFI(port) \
+#define PERIPHERAL_ZEST_RADIO_WIFI_ALT(port) \
 	spi_zest_radio_wifi_##port: &sixtron_connector_##port##_spi {};
 
-#define DRIVERS_ZEST_RADIO_WIFI(port) \
+#define DRIVERS_ZEST_RADIO_WIFI_ALT(port, nss_pin, bucken_pin, irq_pin, vdden_pin) \
+	&spi_zest_radio_wifi_##port { \
+		cs-gpios = <&sixtron_connector_##port nss_pin GPIO_ACTIVE_LOW>; \
+	}; \
 	&spi_zest_radio_wifi_##port { \
 		status = "okay"; \
 		nrf7002_zest_radio_wifi_##port: nrf7002-spi##port@0 { \
@@ -18,9 +21,9 @@
 			status = "okay"; \
 			reg = <0>; \
 			spi-max-frequency = <DT_FREQ_M(8)>; \
-			iovdd-ctrl-gpios = <&sixtron_connector_##port DIO4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; \
-			bucken-gpios = <&sixtron_connector_##port DIO2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; \
-			host-irq-gpios = <&sixtron_connector_##port DIO3 GPIO_ACTIVE_HIGH>; \
+			iovdd-ctrl-gpios = <&sixtron_connector_##port vdden_pin (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; \
+			bucken-gpios = <&sixtron_connector_##port bucken_pin (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; \
+			host-irq-gpios = <&sixtron_connector_##port irq_pin GPIO_ACTIVE_HIGH>; \
 			wifi-max-tx-pwr-2g-dsss = <21>; \
 			wifi-max-tx-pwr-2g-mcs0 = <16>; \
 			wifi-max-tx-pwr-2g-mcs7 = <16>; \
@@ -36,14 +39,14 @@
 		}; \
 	};
 
-#define CHOSEN_ZEST_RADIO_WIFI(port) \
+#define CHOSEN_ZEST_RADIO_WIFI_ALT(port) \
 	/ { \
 		chosen { \
 			zephyr,wifi = &wlan_zest_radio_wifi_##port; \
 		}; \
 	};
 
-#define ZEST_RADIO_WIFI(port) \
-	PERIPHERAL_ZEST_RADIO_WIFI(port) \
-	DRIVERS_ZEST_RADIO_WIFI(port) \
-	CHOSEN_ZEST_RADIO_WIFI(port)
+#define ZEST_RADIO_WIFI_ALT(port, nss, bucken, irq, vdden) \
+	PERIPHERAL_ZEST_RADIO_WIFI_ALT(port) \
+	DRIVERS_ZEST_RADIO_WIFI_ALT(port, nss, bucken, irq, vdden) \
+	CHOSEN_ZEST_RADIO_WIFI_ALT(port)
