@@ -17,7 +17,7 @@ This board enables the following component:
 - Update your device tree by adding the `ZEST_RADIO_WIFI(port)` macro to the `app.overlay` file.\
   Replace `port` with the number of the Zest_Core port to which the shield is connected, e.g.:
 
-  ```c
+  ```dts
   ZEST_RADIO_WIFI(1) /* Zest_Radio_WiFi connected to Zest_Core first port */
   ```
 
@@ -31,8 +31,13 @@ In that case, use instead the alternate variant of the shield:
 
 - Update your device tree by adding the `ZEST_RADIO_WIFI_ALT(port, nss, bucken, irq, vdden)` macro to the `app.overlay` file, with:
   - `port`: number of the Zest_Core port to which the shield is connected,
-  - `nss`: wifi controller SPI Slave Select pin,
-  - `bucken`: wifi controller buck enable pin,
-  - `irq`: wifi controller IRQ pin,
-  - `vdden`: wifi controller VDD enable pin.
+  - `nss`: Wi-Fi controller SPI Slave Select pin,
+  - `bucken`: Wi-Fi controller buck enable pin,
+  - `irq`: Wi-Fi controller IRQ pin,
+  - `vdden`: Wi-Fi controller VDD enable pin.
+
+ ```dts
+  ZEST_RADIO_WIFI_ALT(1, SPI_SS, DIO2, DIO3, DIO4) /* Zest_Radio_WiFi connected to Zest_Core first port */
+  ```
+
 - Activate support for the shield by adding `--shield zest_radio_wifi_alt` to the west command.
